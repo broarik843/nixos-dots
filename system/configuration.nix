@@ -59,12 +59,12 @@
           };
           folders = {
             "Books" = {         # Name of folder in Syncthing, also the folder ID
-              path = "/home/yaroslav/Documents/Books";    # Which folder to add to Syncthing
+              path = "/home/yaroslav/Документы/Книги";    # Which folder to add to Syncthing
               devices = [ "Телефон" ];      # Which devices to share the folder with
             };
 
            "Notes" = {         # Name of folder in Syncthing, also the folder ID
-              path = "/home/yaroslav/Documents/Notes";    # Which folder to add to Syncthing
+              path = "/home/yaroslav/Документы/Заметки";    # Which folder to add to Syncthing
               devices = [ "Телефон" ];      # Which devices to share the folder with
             };
          };

@@ -2,7 +2,7 @@
 
   home = {
     packages = with pkgs; with gnomeExtensions; [
-      lm_sensors     
+     /* lm_sensors     
       # GNome extensions
         gsconnect
         wifi-qrcode
@@ -42,17 +42,17 @@
       #waybar
       #syncthing
       #rofi-wayland
-      #tonelib-gfx
+      tonelib-gfx
 
       inputs.nix-software-center.packages.${system}.nix-software-center
-      kdeconnect
+      kdePackages.kdeconnect-kde
       gradience 
       adw-gtk3
       lsd
       neovim
       fragments
       
-      gnome.gnome-software
+      gnome-software
 
       #librewolf
       firefox
@@ -69,7 +69,7 @@
       obsidian
       scrcpy
       vscodium
-      wl-clipboard
+      wl-clipboard*/
     ];
 
     username = "yaroslav";
@@ -88,14 +88,19 @@
   nix = {
     package = pkgs.nix;
     settings = { 
-      substituters = [
-        #"https://cache.garnix.io"
+      extra-substituters = [
+        "https://cache.garnix.io"
+	"https://nix-community.cachix.org"
+        "https://cache.nixos.org/"
         #"https://prismlauncher.cachix.org"
       ];
-      trusted-public-keys = [
+      extra-trusted-public-keys = [
         #"prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c="
-        #"cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+        "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+	"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+	"cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
+
       builders-use-substitutes = true;
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
@@ -107,7 +112,7 @@
    
   imports = [
     #./themes
-    ./devlop
+    #./devlop
     ./configuration.nix
     ./user_enivroment.nix
     ./programs

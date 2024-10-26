@@ -1,8 +1,8 @@
 { pkgs, ... }: let 
   username = "yaroslav";
   hostname = "system";
-  passroot = "******";
-  passuser = "*******";
+  passroot = "gty12345";
+  passuser = "gty12345";
 
 in {
   

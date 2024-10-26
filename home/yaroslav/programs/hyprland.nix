@@ -3,7 +3,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+    package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
     systemd.enable = false;
     xwayland.enable = true;
     plugins = with inputs; with pkgs; [
@@ -11,10 +11,10 @@
       #hyprfocus.packages.${pkgs.system}.hyprfocus
     ];
 
-  
+  /*
     extraConfig = ''
        # НАСТРОЙКА МОНИТОРОВ
-	monitor=1920x1080, 1366x768, 0x0, 1
+	monitor=1366x768, 1366x768, 0x0, 1
 
 	# АВТОЗАПУСК
 	exec-once = swaybg -i ~/.config/hypr/wallpapers/anime_wall_5.jpg
@@ -231,6 +231,6 @@ bind = , XF86AudioNext, exec, playerctl next
 	bind = , XF86AudioPrev, exec, playerctl previous
 
     '';
+*/
   };
-
 }

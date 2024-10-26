@@ -3,7 +3,7 @@
 {
   imports = [
     ./hyprland.nix
-    ./foot.nix
+    #./foot.nix
     ./vscode.nix
     #./fastfetch.nix
     ./starship.nix

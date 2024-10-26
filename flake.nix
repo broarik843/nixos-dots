@@ -63,5 +63,6 @@
         url = "github:DreamMaoMao/hycov";
         inputs.hyprland.follows = "hyprland";
     };
+    
   };
 }
