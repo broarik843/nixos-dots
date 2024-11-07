@@ -11,27 +11,24 @@
       #hyprfocus.packages.${pkgs.system}.hyprfocus
     ];
 
-  /*
     extraConfig = ''
        # НАСТРОЙКА МОНИТОРОВ
-	monitor=1366x768, 1366x768, 0x0, 1
+	monitor = eDP-1, 1366x768, 0x0, 1
 
 	# АВТОЗАПУСК
-	exec-once = swaybg -i ~/.config/hypr/wallpapers/anime_wall_5.jpg
-exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+	exec-once = hyprpaper
+exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-2
 exec-once = ~/.config/hypr/scripts/xdg-hyprland.sh &
 exec-once = ~/.config/hypr/scripts/gentoo-pipewire-launcher &
-exec-once = nm-applet
+exec = nm-applet
 exec-once = waybar
-#exec-once = flatpak run io.gitlab.librewolf-community 
-#exec-once = librewolf
 
 
 #ClipBoard manager
-exec-once = wl-paste --watch cliphist store
-exec-once = wl-clipboard-history -t
-exec-once = wl-paste --type text --watch cliphist store #Stores only text data
-exec-once = wl-paste --type image --watch cliphist store #Stores only image data
+exec = wl-paste --watch cliphist store
+exec = wl-clipboard-history -t
+exec = wl-paste --type text --watch cliphist store #Stores only text data
+exec = wl-paste --type image --watch cliphist store #Stores only image data
 
 
 #Hyprland env
@@ -67,11 +64,13 @@ input {
     follow_mouse = 1
 
     touchpad {
-        natural_scroll = no
+        natural_scroll = false
+	disable_while_typing = true
+	tap-to-click = true
+	drag_lock = true
+	tap-and-drag = true
     }
-
 }
-
 
 # ГАПСЫ, БОРДЕРЫ, ЦВЕТА...
 
@@ -81,17 +80,16 @@ general {
     border_size = 2
     col.inactive_border=rgb(D1AFFD)
     col.active_border=rgb(FFA3F0)
-    no_border_on_floating=false
-    cursor_inactive_timeout=0
     layout = dwindle
-    sensitivity=0.6
+    snap {
+	enabled = false
+    }
 }
 
 
 # БЛЮРЫ, ТЕНИ, СКРУГЛЕНИЯ
 decoration {
     rounding = 15
-
     blur {
 	enabled = yes
 	size = 6
@@ -99,6 +97,7 @@ decoration {
 	ignore_opacity=false
 	new_optimizations=true
 	xray=true
+	noise = 0.2
     }
 
     drop_shadow=true
@@ -107,7 +106,7 @@ decoration {
     col.shadow = rgb(34313E)
     col.shadow_inactive = rgb(DEB3EB)
 
-    shadow_scale=0.4
+    #shadow_scale=0.4
 
     # Затемнение неактивных окон
     dim_inactive = false
@@ -138,99 +137,116 @@ animations {
 
 
 # НАСТРОЙКА ПОВЕДЕНИЯ ОКОН
-dwindle {
-   pseudotile=true
-   force_split=2
-   
-}
+#dwindle {
+#   pseudotile=true
+#   force_split=2
+#   
+#}
 
+  cursor:inactive_timeout = 30
 
 # ЖЕСТ
 gestures {
-    # See https://wiki.hyprland.org/Configuring/Variables/ for more
-    workspace_swipe = off
+  workspace_swipe = false
+  workspace_swipe_distance = 100
+
 }
 
 
 # СЦЕНАРИИ ПРИ СТАРТЕ HYPERLAND
 # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-device:epic mouse V1 {
-    sensitivity = -0.5
+device { 
+    name = synps/2-synaptics-touchpad
+    #accel_profile = adaptive
+    sensitivity = 0.4
+
 }
-e
+
+device {
+    name = tpps/2-elan-trackpoint
+    sensitivity = -0.4
+}
+
 
 # ПРАВИЛА ОКОН (hyprctl clients - так можно узнать класс окна)
-windowrulev2=opacity 0.9,class:^(kitty)$
-windowrulev2=opacity 0.9,class:^(Waybar)$
-windowrulev2=tile,class:^(kitty)$
-windowrule=noblur,class:^(librewolf)$
-windowrule=noblur,title:^(Картинка в картинке)$
-windowrulev2=move 853,480,floating:1,^(librewolf)$,title:^(Картинка в картинке)$
-windowrulev2=workspace 2,title:^(Яндекс Музыка — собираем музыку и подкасты для вас — Mozilla Firefox)$
-windowrule=float,title:^(Open File)$
-windowrulev2=center,floating:1,title:^(Open File)$ 
-windowrule = size 422,867,(org.telegram.desktop)$
-windowrule = float,^(org.telegram.desktop)$
+windowrulev2=opacity 0.8,class:^(Terminal)$
+#windowrulev2=opacity 0.9,class:^(Waybar)$
+#windowrulev2=tile,class:^(kitty)$
+#windowrule=noblur,class:^(librewolf)$
+#windowrule=noblur,title:^(Картинка в картинке)$
+#windowrulev2=move 853,480,floating:1,^(librewolf)$,title:^(Картинка в картинке)$
+#windowrulev2=workspace 2,title:^(Яндекс Музыка — собираем музыку и подкасты для вас — Mozilla Firefox)$
+#windowrule=float,title:^(Open File)$
+#windowrulev2=center,floating:1,title:^(Open File)$ 
+#windowrule = size 422,867,(org.telegram.desktop)$
+#windowrule = float,^(org.telegram.desktop)$
 
-$mainMod = SUPER
-bind = $mainMod, Q, killactive
-bind = $mainMod, M, exit
-bind = $mainMod, T,togglefloating
-bind = $mainMod, A, exec,foot
-bind = $mainMod, F,exec,librewolf
-bind = $mainMod, D,exec,rofi -show drun
-bind = $mainMod, N,exec,nautilus
-bind = $mainMod, S,exec,grim -t png -g "$(slurp)" Screenshots/$(date +'%s_screnshot.png'),
+$mod = SUPER
+bind = $mod, Q, killactive
+bind = $mod, M, exit
+bind = $mod, T, togglefloating
+bind = $mod, RETURN, exec, foot
+bind = $mod, F,exec,librewolf
+bind = $mod, D,exec,rofi -show drun
+bind = $mod, N,exec,nautilus
+
+# Reload config
+bind = $mod SHIFT, R, exec, pkill waybar && hyprctl reload
+
+# Screnshot
+bind = , Print, exec, grimblast --notify copysave screen $HOME/Media/Screenshots/$(date +%Y%m%d_%Hh%Mm%Ss.png)
+bind = SHIFT, Print, exec, grimblast --notify --freeze copysave area $HOME/Media/Screenshots/$(date +%Y%m%d_%Hh%Mm%Ss.png)
 
 # Управление фокусом
-bind = $mainMod, left, movefocus, l
-bind = $mainMod, right, movefocus, r
-bind = $mainMod, up, movefocus, u
-bind = $mainMod, down, movefocus, d 
+bind = $mod, left, movefocus, l
+bind = $mod, right, movefocus, r
+bind = $mod, up, movefocus, u
+bind = $mod, down, movefocus, d 
 
 # Переключение воркспейсов
-bind = $mainMod, 1, workspace, 1
-bind = $mainMod, 2, workspace, 2
-bind = $mainMod, 3, workspace, 3
-bind = $mainMod, 4, workspace, 4
-bind = $mainMod, 5, workspace, 5
-bind = $mainMod, 6, workspace, 6
-bind = $mainMod, 7, workspace, 7
-bind = $mainMod, 8, workspace, 8
-bind = $mainMod, 9, workspace, 9
-bind = $mainMod, 0, workspace, 10
+bind = $mod, 1, workspace, 1
+bind = $mod, 2, workspace, 2
+bind = $mod, 3, workspace, 3
+bind = $mod, 4, workspace, 4
+bind = $mod, 5, workspace, 5
+bind = $mod, 6, workspace, 6
+bind = $mod, 7, workspace, 7
+bind = $mod, 8, workspace, 8
+bind = $mod, 9, workspace, 9
+bind = $mod, 0, workspace, 10
 
 # Перемещение окна на другой воркспейс
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
+bind = $mod SHIFT, 1, movetoworkspace, 1
+bind = $mod SHIFT, 2, movetoworkspace, 2
+bind = $mod SHIFT, 3, movetoworkspace, 3
+bind = $mod SHIFT, 4, movetoworkspace, 4
+bind = $mod SHIFT, 5, movetoworkspace, 5
+bind = $mod SHIFT, 6, movetoworkspace, 6
+bind = $mod SHIFT, 7, movetoworkspace, 7
+bind = $mod SHIFT, 8, movetoworkspace, 8
+bind = $mod SHIFT, 9, movetoworkspace, 9
+#bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
 # перемещение и ресайз окон ЛКМ ПКМ + mineMod
 
-bindm =$mainMod, mouse:272, movewindow
-bindm =$mainMod, mouse:273, resizewindow
+bindm =$mod, mouse:272, movewindow
+bindm =$mod, mouse:273, resizewindow
 
-bind=SUPER,mouse_down,workspace,e-1
-bind=SUPER,mouse_up,workspace,e+1
+bind=$mod,mouse_down,workspace,e-1
+bind=$mod,mouse_up,workspace,e+1
 
 
 # регулировка звука с клавиатуры 
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec volumectl toggle-mute
-bindsym XF86AudioMicMute exec volumectl -m toggle-mute
+binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+
+binde = , XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-
+bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bind = , XF86AudioMicMute, exec, fixf4=$(cat /sys/class/leds/platform\:\:micmute/brightness); echo $((1-fixf4)) | doas tee /sys/class/leds/platform\:\:micmute/brightness; wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bind =, XF86MonBrightnessDown, exec, brightnessctl s 10%-
+bind =, XF86MonBrightnessUp, exec, brightnessctl s +10%
 bind = , XF86AudioPlay, exec, playerctl play-pause
 bind = , XF86AudioNext, exec, playerctl next
-	bind = , XF86AudioPrev, exec, playerctl previous
+bind = , XF86AudioPrev, exec, playerctl previous
 
     '';
-*/
   };
 }

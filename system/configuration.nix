@@ -1,8 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 { 
-
-
+  
   documentation = {
     enable = true;
     doc.enable = false;
@@ -31,10 +30,12 @@
       #'';
       };
     };*/
-   flatpak.enable = true;
-   udev.packages = with pkgs; [
+    printing.enable = false;
+    udev.packages = with pkgs; [
       android-udev-rules
     ];
+    
+    fwupd.enable = true;
 
     pipewire = {
       enable = true;
@@ -45,7 +46,9 @@
       pulse.enable = true;
       #jack.enable = true;
      };
-    
+     
+     flatpak.enable = true;
+
      # Syncthink
      syncthing = {
       enable = true;
@@ -72,6 +75,18 @@
       };
 
   };
+  services.thinkfan = {
+      enable = true;
+      levels = [
+	[ 0 0 55 ]
+	[ 2 55 65 ]
+	[ 3 65 70 ]
+	[ 4 70 75 ]
+	[ 5 75 80 ]
+	[ 6 80 90 ]
+	[ "level full-speed" 90 105 ]
+      ];
+    };
 
 
   programs = { 
@@ -82,28 +97,21 @@
     };
 */
     nix-ld.enable = true;
-    hyprland = {
+
+    nh = {
       enable = true;
-      xwayland.enable = true;
+      clean.enable = true;
+      flake = "/etc/nixos";
     };
     fish.enable = true;
     virt-manager.enable = true;
     
   };
 
-
-
-
-  # Gnome
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-  };
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "yaroslav";
-
-
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  
 
   security = {
     rtkit.enable = true;
@@ -134,10 +142,4 @@
   i18n.defaultLocale = "ru_RU.UTF-8";
 
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    options ="grp:caps_toggle";
-  };
-  
 }

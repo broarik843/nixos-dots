@@ -1,11 +1,52 @@
-{ config, pkgs, ... }: {
-    /*home.pointerCursor = {
-      package = 
-      name = "oreo_cursor"; 
-      size = 24;
-      gtk.enable = true;
-      x11.enable = true;
-    };*/
+{ config, pkgs, inputs, ... }: {
+  
+  imports = [ inputs.stylix.homeManagerModules.stylix ];
+
+  stylix = {
+    enable = true;
+    image = ./images/Kita.png;
+    polarity = "dark";
+    base16Scheme = {
+      base00 = "#1e1e2e";
+      base01 = "#181825";
+      base02 = "#313244";
+      base03 = "#45475a";
+      base04 = "#585b70";
+      base05 = "#cdd6f4";
+      base06 = "#f5e0dc";
+      base07 = "#b3befe";
+      base08 = "#f38ba8";
+      base09 = "#fab387";
+      base0A = "#f9e2af";
+      base0B = "#a6e3a1";
+      base0C = "#94e2d5";
+      base0D = "#89b4fa";
+      base0E = "#cba6f7";
+      base0F = "#f2cdcd";
+    };
+    cursor = {
+      name = "GoogleDot-White";
+      package = pkgs.google-cursor;
+      size = 21;
+    };
+    fonts = {
+      serif = {
+        name = "JetBrainsMono NerdFont";
+        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+      };
+      monospace = config.stylix.fonts.serif;
+      emoji.package = pkgs.noto-fonts-emoji;
+      sizes.terminal = 13;
+    };
+    targets = {
+      vesktop.enable = false;
+      neovim.enable = false;
+      gnome.enable = false;
+      vscode.enable = false;
+    };
+
+
+  };
 
   home.packages = with pkgs; [
     gradience
@@ -14,11 +55,6 @@
 
   gtk = {
     enable = true;
-    font.name = "Noto Sans 11";
-    theme = {
-      name = "adwaita";
-      package = pkgs.libadwaita;
-    };
     gtk3.extraConfig = {
       gtk-xft-antialias = 1;
       gtk-xft-hinting = 1;
@@ -36,20 +72,16 @@
     };
     iconTheme = {
       name = "Papirus-Dark";
-      package = pkgs.papirus-folders;
+      package = pkgs.papirus-icon-theme;
     };
   };
 
   qt = {
     enable = true;
-    platformTheme = "qtct";
-    style = {
-      package = pkgs.catppuccin-kde;
-      name = "Catpuccin-Mocha-Dark";
-    };
-  };
-
-  home.sessionVariables = {
-    GTK_THEME = "${config.gtk.theme.name}";
+    #platformTheme.name = "qtct";
+    #style = {
+    #  package = pkgs.catppuccin-kde;
+    #  name = "Catpuccin-Mocha-Dark";
+    #};
   };
 }

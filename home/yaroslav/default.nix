@@ -1,8 +1,9 @@
 { config, pkgs, inputs,...}: {
+  
+ 
 
   home = {
-    packages = with pkgs; with gnomeExtensions; [
-     /* lm_sensors     
+    packages = with pkgs; with gnomeExtensions; [     
       # GNome extensions
         gsconnect
         wifi-qrcode
@@ -12,11 +13,23 @@
         blur-my-shell
 	appindicator
 
+      libresprite
+      amberol
+      davinci-resolve
+      reaper
+      #protonmail-desktop
+      proton-pass
+      ollama
+      nautilus
+      grimblast
+      slurp
       easyeffects
       #tuxguitar
       #thinkfan
+      #inputs.nur.repos.guoard.hiddify
+      lm_sensors
       inputs.ayugram-desktop.packages.${pkgs.system}.ayugram-desktop
-      
+      inputs.zen-browser.packages."${system}".specific
 
       #rhythmbox
 
@@ -29,25 +42,20 @@
       #yabridge
       #yabridgectl
 
-      #kdenlive
       #obs-studio
-
-      
       
       #protonvpn-gui
-
+      brightnessctl
 
       #lutris
       tor-browser
-      #waybar
-      #syncthing
-      #rofi-wayland
+      hyprpaper
+      waybar
+      rofi-wayland
       tonelib-gfx
 
       inputs.nix-software-center.packages.${system}.nix-software-center
       kdePackages.kdeconnect-kde
-      gradience 
-      adw-gtk3
       lsd
       neovim
       fragments
@@ -57,7 +65,7 @@
       #librewolf
       firefox
       starship
-      #heroic
+      heroic
 
       vesktop
 
@@ -65,11 +73,10 @@
       
       wineWowPackages.waylandFull
 
-      gnome.gnome-tweaks
       obsidian
       scrcpy
       vscodium
-      wl-clipboard*/
+      wl-clipboard
     ];
 
     username = "yaroslav";
@@ -92,10 +99,8 @@
         "https://cache.garnix.io"
 	"https://nix-community.cachix.org"
         "https://cache.nixos.org/"
-        #"https://prismlauncher.cachix.org"
       ];
       extra-trusted-public-keys = [
-        #"prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c="
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
 	"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 	"cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -111,8 +116,8 @@
   home.stateVersion = "24.11";
    
   imports = [
-    #./themes
-    #./devlop
+    ./themes
+    ./devlop
     ./configuration.nix
     ./user_enivroment.nix
     ./programs

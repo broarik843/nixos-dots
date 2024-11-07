@@ -1,8 +1,8 @@
 { pkgs, ... }: let 
   username = "yaroslav";
   hostname = "system";
-  passroot = "password";
-  passuser = "password";
+  passroot = "";
+  passuser = "";
 
 in {
   
@@ -19,8 +19,9 @@ in {
       #"jackaudio"
       "wheel"
       "adbusers"
-      "podman"
+      "netdev"
       "libvirtd"
+      "networkmanager"
     ];
     shell = pkgs.fish;
   };

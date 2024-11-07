@@ -6,13 +6,13 @@
       main = { 
         app-id = "Terminal";
         title = "Terminal";
-        font="JetBrains Mono NerdFont:size=12";
+        #STYLIX font="JetBrains Mono NerdFont:size=12";
 	};
       cursor = {
         style = "beam";
         blink = true;
        };
-      colors = {
+      /*STYLIX colors = {
 	foreground="cdd6f4"; # Text
 	background="1e1e2e"; # Base
 	regular0="45475a";   # Surface 1
@@ -31,7 +31,7 @@
 	bright5="f5c2e7";    # pink
 	bright6="94e2d5";    # teal
 	bright7="a6adc8";    # Subtext 0
-      };
+      };*/
     };
   };
 

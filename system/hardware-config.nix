@@ -84,19 +84,23 @@
         USB_AUTOSUSPEND=1;
         AMDGPU_ABM_LEVEL_ON_BAT="1";
         AMDGPU_ABM_LEVEL_ON_AC="1";
-        CPU_SCALING_GOVERNOR_ON_AC="shedutil";
-        CPU_SCALING_GOVERNOR_ON_BAT="perfomance";
+	WIFI_PWR_ON_AC=0;
+	WIFI_PWR_ON_BAT=0;
+	SOUND_POWER_SAVE_ON_AC=0;
+        SOUND_POWER_SAVE_ON_BAT=0;
+        CPU_SCALING_GOVERNOR_ON_AC="conservative";
+        CPU_SCALING_GOVERNOR_ON_BAT="performance";
         RUNTIME_PM_ON_AC="auto";
         RUNTIME_PM_ON_BAT="auto";
         PLATFORM_PROFILE_ON_AC = "balanced";
-        PLATFORM_PROFILE_ON_BAT = "perfomance";
-        SCHED_POWERSAVE_ON_AC= 1;
-        SCHED_POWERSAVE_ON_BAT= 0;
+        PLATFORM_PROFILE_ON_BAT = "performance";
+        #REMOVE SCHED_POWERSAVE_ON_AC= 1;
+        #REMOVE SCHED_POWERSAVE_ON_BAT= 0;
         CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "perfomance";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "performance";
         DISK_DEVICES="nvme0n1";
-        START_CHARGE_THRESH_BAT0 = 90;
-        STOP_CHARGE_THRESH_BAT0 = 100;
+        #START_CHARGE_THRESH_BAT0 = 90;
+        #STOP_CHARGE_THRESH_BAT0 = 100;
       };
     };
   };
@@ -107,16 +111,23 @@
   hardware.pulseaudio.enable = false;   
   
   hardware.graphics = {
-    
       enable = true;
       enable32Bit = true;
           };
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
+
+    amdvlk
+    driversi686Linux.amdvlk
   ];
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen; 
+    plymouth = {
+      enable = true;
+      theme = "bgrt";
+    };
+    
+    #kernelPackages = pkgs.linuxPackages_latest;
   loader = {
   systemd-boot.enable = false;
     efi = {
@@ -129,29 +140,39 @@
        efiSupport = true;
        #splashImage = /e;
      };
-     timeout = 5;
+     timeout = 0;
     };
   initrd.availableKernelModules = ["nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   initrd.kernelModules = [ ];
   kernelModules = [ "kvm-amd" "amdgpu" "v4l2loopback" ];
+  kernelParams = [
+    "quiet"
+    "splash"
+    "boot.shell_on_fail"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+  ];
+
   extraModulePackages = [ pkgs.linuxPackages_zen.v4l2loopback ];
   extraModprobeConfig = ''
-    options thinkpad_acpi fan_control=1
+    options thinkpad_acpi experimental=1 fan_control=1
   '';
-    consoleLogLevel = 0;
+    consoleLogLevel = 3;
     initrd.verbose = false;
     tmp.cleanOnBoot = true;
   }; 
 
 
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ee297ca4-cc3d-4050-a1fd-51c9ca3521fb";
+  fileSystems."/" = { 
+      device = "/dev/disk/by-uuid/ee297ca4-cc3d-4050-a1fd-51c9ca3521fb";
       fsType = "btrfs";
+      options = [ "compress=lzo" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/AB81-4E39";
+  fileSystems."/boot" = {
+     device = "/dev/disk/by-uuid/AB81-4E39";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
