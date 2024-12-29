@@ -1,9 +1,18 @@
-{ pkgs, inputs, ... }: 
+{ pkgs, inputs, config, ... }: 
 
 {
+  home.packages = with pkgs; [
+    grimblast
+    slurp
+    brightnessctl
+    rofi-wayland
+    hyprpaper
+
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
+    #package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
     systemd.enable = false;
     xwayland.enable = true;
     plugins = with inputs; with pkgs; [
@@ -14,12 +23,13 @@
     extraConfig = ''
        # НАСТРОЙКА МОНИТОРОВ
 	monitor = eDP-1, 1366x768, 0x0, 1
+	monitor = HDMI-A-1, 2560x1440@144, 0x0, 1
 
 	# АВТОЗАПУСК
 	exec-once = hyprpaper
-exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-2
-exec-once = ~/.config/hypr/scripts/xdg-hyprland.sh &
-exec-once = ~/.config/hypr/scripts/gentoo-pipewire-launcher &
+#exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-2
+#exec-once = ~/.config/hypr/scripts/xdg-hyprland.sh &
+#exec-once = ~/.config/hypr/scripts/gentoo-pipewire-launcher &
 exec = nm-applet
 exec-once = waybar
 
@@ -81,13 +91,10 @@ general {
     col.inactive_border=rgb(D1AFFD)
     col.active_border=rgb(FFA3F0)
     layout = dwindle
-    snap {
-	enabled = false
-    }
 }
 
 
-# БЛЮРЫ, ТЕНИ, СКРУГЛЕНИЯ
+# БЛЮРЫ, ТЕНИ, СКРУГЛЕНИ
 decoration {
     rounding = 15
     blur {
@@ -99,12 +106,17 @@ decoration {
 	xray=true
 	noise = 0.2
     }
+    
+    #shadow {
+    #  enabled = true
+    #  range = 10
+    #  render_power = 3
+    #  color = rgb(34313E)
+    #  color_inactive = rgb(DEB3EB)
+    
+    #}
 
-    drop_shadow=true
-    shadow_range=10
-    shadow_render_power=3
-    col.shadow = rgb(34313E)
-    col.shadow_inactive = rgb(DEB3EB)
+   
 
     #shadow_scale=0.4
 

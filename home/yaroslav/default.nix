@@ -3,69 +3,56 @@
  
 
   home = {
-    packages = with pkgs; with gnomeExtensions; [     
-      # GNome extensions
-        gsconnect
-        wifi-qrcode
-	rounded-corners
-	hibernate-status-button
-	clipboard-history
-        blur-my-shell
-	appindicator
-
-      libresprite
-      amberol
-      davinci-resolve
-      reaper
+    packages = with pkgs; [    
+      arduino-ide
+      krita
+      steam
+      #libresprite
+      #davinci-resolve
+      #reaper
       #protonmail-desktop
       proton-pass
-      ollama
+      tgpt
       nautilus
-      grimblast
-      slurp
+      lutris
+      
       easyeffects
       #tuxguitar
-      #thinkfan
-      #inputs.nur.repos.guoard.hiddify
       lm_sensors
+      prismlauncher
       inputs.ayugram-desktop.packages.${pkgs.system}.ayugram-desktop
       inputs.zen-browser.packages."${system}".specific
 
-      #rhythmbox
+      hiddify-app
+
+      rhythmbox
 
       #webkitgtk
       
-      #hiddify_next
       fastfetch
+      mangohud
     
       #carla
       #yabridge
       #yabridgectl
 
-      #obs-studio
+      obs-studio
       
-      #protonvpn-gui
-      brightnessctl
-
-      #lutris
-      tor-browser
-      hyprpaper
-      waybar
-      rofi-wayland
-      tonelib-gfx
+      #tor-browser
+      #tonelib-gfx
 
       inputs.nix-software-center.packages.${system}.nix-software-center
       kdePackages.kdeconnect-kde
-      lsd
       neovim
       fragments
       
       gnome-software
 
       #librewolf
+      lsd
       firefox
       starship
-      heroic
+      #heroic
 
       vesktop
 
@@ -78,7 +65,7 @@
       vscodium
       wl-clipboard
     ];
-
+    enableNixpkgsReleaseCheck = false;
     username = "yaroslav";
     homeDirectory = "/home/yaroslav";
   };

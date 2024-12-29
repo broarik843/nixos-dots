@@ -6,6 +6,7 @@
 {
   imports = with inputs;
   [ 
+    inputs.chaotic.nixosModules.default
     (modulesPath + "/installer/scan/not-detected.nix") 
     "${nixos-hardware}/lenovo/thinkpad/t14/amd/gen1"
   ];
@@ -74,38 +75,9 @@
     };
   };  
   
-  #TLP
-  services.power-profiles-daemon.enable = false;
-  services = {
-    thermald.enable = true;
-    tlp = { 
-      enable = true;
-      settings = {
-        USB_AUTOSUSPEND=1;
-        AMDGPU_ABM_LEVEL_ON_BAT="1";
-        AMDGPU_ABM_LEVEL_ON_AC="1";
-	WIFI_PWR_ON_AC=0;
-	WIFI_PWR_ON_BAT=0;
-	SOUND_POWER_SAVE_ON_AC=0;
-        SOUND_POWER_SAVE_ON_BAT=0;
-        CPU_SCALING_GOVERNOR_ON_AC="conservative";
-        CPU_SCALING_GOVERNOR_ON_BAT="performance";
-        RUNTIME_PM_ON_AC="auto";
-        RUNTIME_PM_ON_BAT="auto";
-        PLATFORM_PROFILE_ON_AC = "balanced";
-        PLATFORM_PROFILE_ON_BAT = "performance";
-        #REMOVE SCHED_POWERSAVE_ON_AC= 1;
-        #REMOVE SCHED_POWERSAVE_ON_BAT= 0;
-        CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "performance";
-        DISK_DEVICES="nvme0n1";
-        #START_CHARGE_THRESH_BAT0 = 90;
-        #STOP_CHARGE_THRESH_BAT0 = 100;
-      };
-    };
-  };
+  
+  services.power-profiles-daemon.enable = true;
 
-    
   
   # False hardware support Pulseaudio
   hardware.pulseaudio.enable = false;   
@@ -127,7 +99,7 @@
       theme = "bgrt";
     };
     
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_cachyos;
   loader = {
   systemd-boot.enable = false;
     efi = {
@@ -138,12 +110,14 @@
        enable = true;
        device = "nodev";
        efiSupport = true;
+       useOSProber = true;
        #splashImage = /e;
      };
-     timeout = 0;
+     timeout = 3;
     };
   initrd.availableKernelModules = ["nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  initrd.kernelModules = [ ];
+  initrd.kernelModules = [];
+  #blacklistedKernelModules = [ "acpi_cpufreq" ];
   kernelModules = [ "kvm-amd" "amdgpu" "v4l2loopback" ];
   kernelParams = [
     "quiet"
@@ -152,9 +126,11 @@
     "rd.systemd.show_status=false"
     "rd.udev.log_level=3"
     "udev.log_priority=3"
+    "amdgpu.ppfeaturemask=0xffffffff"
+    "amd_pstate=active"
   ];
 
-  extraModulePackages = [ pkgs.linuxPackages_zen.v4l2loopback ];
+  #extraModulePackages = [ pkgs.linuxPackages_zen.v4l2loopback ];
   extraModprobeConfig = ''
     options thinkpad_acpi experimental=1 fan_control=1
   '';

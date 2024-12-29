@@ -12,8 +12,7 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    
-    libgtop
+    alsa-utils
     unzip
     efivar
     #virt-manager
@@ -31,7 +30,7 @@
     doas-sudo-shim
 ];
 
-  
+  chaotic.nyx.cache.enable = true;
    # Exiperimental Nix os command and futures
   nix.settings = {
     extra-substituters = [
@@ -71,13 +70,12 @@
   };
 
    
-  
   nixpkgs.config = {
     allowUnfree = true;
   };
   
   #inputs.chaotic.nyx.cache.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }
 

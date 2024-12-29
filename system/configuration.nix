@@ -30,6 +30,7 @@
       #'';
       };
     };*/
+    ollama.enable = true;
     printing.enable = false;
     udev.packages = with pkgs; [
       android-udev-rules
@@ -44,50 +45,46 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      #jack.enable = true;
+      jack.enable = true;
      };
-     
      flatpak.enable = true;
-
      # Syncthink
      syncthing = {
       enable = true;
       user = "yaroslav";
-      dataDir = "/home/yaroslav/Документы"; 
+      dataDir = "/home/yaroslav/Documetns"; 
       overrideDevices = true;     
       overrideFolders = true; 
         settings = {
           devices = {
-            "Телефон" = { id = "A43N4VM-WNJ3ODZ-DKSUI6B-IFRUBWE-KZPZNKO-CXCNXKN-JHC4LLS-CKLRLQA"; };
+            "Phone" = { id = "A43N4VM-WNJ3ODZ-DKSUI6B-IFRUBWE-KZPZNKO-CXCNXKN-JHC4LLS-CKLRLQA"; };
           };
           folders = {
-            "Books" = {         # Name of folder in Syncthing, also the folder ID
-              path = "/home/yaroslav/Документы/Книги";    # Which folder to add to Syncthing
-              devices = [ "Телефон" ];      # Which devices to share the folder with
+            "Books" = {        
+              path = "/home/yaroslav/Documetns/Books"; 
+              devices = [ "Phone" ];     
             };
 
-           "Notes" = {         # Name of folder in Syncthing, also the folder ID
-              path = "/home/yaroslav/Документы/Заметки";    # Which folder to add to Syncthing
-              devices = [ "Телефон" ];      # Which devices to share the folder with
+           "Notes" = { 
+              path = "/home/yaroslav/Documents/Notes";  
+              devices = [ "Phone" ];    
             };
          };
        };
       };
-
-  };
-  services.thinkfan = {
+    thinkfan = {
       enable = true;
       levels = [
-	[ 0 0 55 ]
-	[ 2 55 65 ]
+	[ 0 0 60 ]
+	[ 2 60 65 ]
 	[ 3 65 70 ]
 	[ 4 70 75 ]
 	[ 5 75 80 ]
-	[ 6 80 90 ]
-	[ "level full-speed" 90 105 ]
+	[ 6 80 100 ]
+	#[ "level full-speed" 100 105 ]
       ];
     };
-
+};
 
   programs = { 
     /*git = {
@@ -97,10 +94,13 @@
     };
 */
     nix-ld.enable = true;
+    gamemode.enable = true;
+    hyprland.enable = true;
+    hyprland.xwayland.enable = true;
 
     nh = {
       enable = true;
-      clean.enable = true;
+     clean.enable = true;
       flake = "/etc/nixos";
     };
     fish.enable = true;
@@ -112,6 +112,7 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   
+  #services.desktopManager.cosmic.enable = true;
 
   security = {
     rtkit.enable = true;
@@ -131,7 +132,7 @@
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    #nerd-fonts.jetbrains-mono 
   ];
   
 

@@ -32,7 +32,7 @@
     fonts = {
       serif = {
         name = "JetBrainsMono NerdFont";
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        package = pkgs.nerd-fonts.jetbrains-mono;
       };
       monospace = config.stylix.fonts.serif;
       emoji.package = pkgs.noto-fonts-emoji;

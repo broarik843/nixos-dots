@@ -10,9 +10,11 @@
     
     python311
     
-    nodejs
+    nodejs_latest
+    sass
 
     rustup
+    go
     
     ];
 }

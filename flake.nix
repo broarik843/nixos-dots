@@ -10,7 +10,9 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };    
-    nur.url = github:nix-community/NUR;
+    #nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    ags.url = "github:aylur/ags"; 
+    nur.url = "github:nix-community/NUR";
     stylix.url = "github:danth/stylix";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
@@ -50,7 +52,10 @@
     nixosConfigurations = {
       system = inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
-        modules = [ ./system ];
+        modules = [ 
+	  ./system  
+	  home-manager.nixosModules.home-manager  
+	];
       };
     };
 
@@ -59,10 +64,7 @@
       yaroslav = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = { inherit inputs; };
-        modules = [
-          ./home/yaroslav
-
-        ];
+        modules = [ ./home/yaroslav ];
       };
     };
   };

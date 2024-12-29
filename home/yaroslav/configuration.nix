@@ -6,13 +6,23 @@
       enable = true;
       update.onActivation = true;
       packages = [
-        "com.valvesoftware.Steam"   
         "com.github.tchx84.Flatseal"   
         #"io.github.Rirusha.Cassette.Devel"
         "com.mattjakeman.ExtensionManager"  
       ];
      
     };
+
+    programs.gnome-shell.extensions = [ 
+      "gsconnect"
+      "wifi-qrcode"
+      "rounded-corners"
+      "hibernate-status-button"
+      "clipboard-history"
+      "blur-my-shell"
+      "appindicator"
+      "media-controls"
+    ];
 
     services.hyprpaper = {
      enable = true;
