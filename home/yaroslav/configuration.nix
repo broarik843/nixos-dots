@@ -28,7 +28,6 @@
      enable = true;
      settings = {
        preload = ["~/.wallpapers/Kita.png"];
-
        wallpaper = [" ,~/.wallpapers/Kita.png"];   
      };
    };

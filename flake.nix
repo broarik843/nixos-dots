@@ -11,18 +11,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };    
     #nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    ags.url = "github:aylur/ags"; 
+    #ags.url = "github:aylur/ags"; 
     nur.url = "github:nix-community/NUR";
     stylix.url = "github:danth/stylix";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    #hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     ayugram-desktop.url = "github:ayugram-port/ayugram-desktop/release?submodules=1";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    nix-software-center.url = "github:snowfallorg/nix-software-center";
+    #nix-software-center.url = "github:snowfallorg/nix-software-center";
     flatpaks.url = "github:gmodena/nix-flatpak";
-    nix-index-database.url = "github:nix-community/nix-index-database";
+    #nix-index-database.url = "github:nix-community/nix-index-database";
     
     flake-parts.url = "github:hercules-ci/flake-parts";
 

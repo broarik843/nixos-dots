@@ -1,0 +1,9 @@
+{ pkgs, config, ... }:
+
+{
+  home = {
+    sessionVariables = {
+      LD_LIBRARY_PATH="${glib.out}/lib";
+    };
+  };
+}

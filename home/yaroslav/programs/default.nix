@@ -8,9 +8,10 @@
     #./neovim.nix
     #./fastfetch.nix
     ./starship.nix
-    ./ags.nix
+    #./ags.nix
     #./zen-browser.nix
     #./hyprpanel.nix
     #./hyprlock.nix
+    #./waybar
    ];
 }

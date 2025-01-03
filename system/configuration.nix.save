@@ -1,0 +1,186 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, lib, ... }:
+
+{
+  systemd = {
+    targets.network-online.wantedBy = pkgs.lib.mkForce [];
+    services = {
+      NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce []; 
+      NetworkManager-wait-online.enable = false;
+      systemd-udev-settle.enable = false;
+    };
+  };
+
+  /*
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    package = pkgs.hyprland;
+  };
+
+  programs.gvfs = {
+    enable = true;
+  };
+
+  programs.flatpak = {
+    enable = true;
+    package = pkgs.flatpak;
+  };
+  */
+
+  nixpkgs.config = {
+    permittedInsecurePackages = [
+      "electron-25.9.0"
+    ];
+  };
+  
+  programs.fish.enable = true;  
+  users.defaultUserShell = pkgs.fish;
+
+  services = {
+    udev.packages = with pkgs; [
+      android-udev-rules
+    ];
+
+    gvfs = {
+      enable = true;
+    };
+
+    flatpak = {
+      enable = true;
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+    };  
+
+  };
+
+  security = {
+    rtkit.enable = true;
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraConfig = ''
+        permit persist keepenv :wheel
+      '';
+    };
+    polkit.enable = true;
+  };
+  
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-emoji
+    (nerdfonts.override { fonts = [ "0xProto" ]; })
+    ];
+    
+
+  # Gnome
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "yaroslav";
+
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
+  nixpkgs.overlays = [
+  (final: prev: {
+    gnome = prev.gnome.overrideScope' (gnomeFinal: gnomePrev: {
+      mutter = gnomePrev.mutter.overrideAttrs ( old: {
+        src = pkgs.fetchgit {
+          url = "https://gitlab.gnome.org/vanvugt/mutter.git";
+          # GNOME 45: triple-buffering-v4-45
+          rev = "0b896518b2028d9c4d6ea44806d093fd33793689";
+          sha256 = "sha256-mzNy5GPlB2qkI2KEAErJQzO//uo8yO0kPQUwvGDwR4w=";
+        };
+      } );
+    });
+  })
+  ];
+
+  
+
+  # Set your time zone.
+  time.timeZone = "Europe/Moscow";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "ru_RU.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ru_RU.UTF-8";
+    LC_IDENTIFICATION = "ru_RU.UTF-8";
+    LC_MEASUREMENT = "ru_RU.UTF-8";
+    LC_MONETARY = "ru_RU.UTF-8";
+    LC_NAME = "ru_RU.UTF-8";
+    LC_NUMERIC = "ru_RU.UTF-8";
+    LC_PAPER = "ru_RU.UTF-8";
+    LC_TELEPHONE = "ru_RU.UTF-8";
+    LC_TIME = "ru_RU.UTF-8";
+  };
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    options ="grp:caps_toggle";
+  };
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.yaroslav = {
+    isNormalUser = true;
+    description = "Yaroslav";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [ ];
+  };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+      wget
+      android-tools
+      foot
+      librewolf
+      starship
+      telegram-desktop
+      neofetch
+      wl-clipboard
+      libreoffice
+      tmux
+      rofi-wayland
+      slurp
+      grim
+      gradience
+      wget
+      swww
+      virt-manager
+      kdenlive
+      gnome.gnome-tweaks
+      obsidian
+      scrcpy
+      vscodium
+      git
+    
+      libva
+      libva-utils
+
+      amdvlk	
+  ];
+ 
+  system.stateVersion = "24.05"; # Did you read the comment?
+
+}

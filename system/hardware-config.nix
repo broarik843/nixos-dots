@@ -87,11 +87,12 @@
       enable32Bit = true;
           };
   hardware.graphics.extraPackages = with pkgs; [
-    rocmPackages.clr.icd
+    #rocmPackages.clr.icd
 
     amdvlk
     driversi686Linux.amdvlk
   ];
+
   # Bootloader.
   boot = {
     plymouth = {
@@ -99,7 +100,7 @@
       theme = "bgrt";
     };
     
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_latest_xen_dom0;
   loader = {
   systemd-boot.enable = false;
     efi = {
@@ -126,8 +127,6 @@
     "rd.systemd.show_status=false"
     "rd.udev.log_level=3"
     "udev.log_priority=3"
-    "amdgpu.ppfeaturemask=0xffffffff"
-    "amd_pstate=active"
   ];
 
   #extraModulePackages = [ pkgs.linuxPackages_zen.v4l2loopback ];

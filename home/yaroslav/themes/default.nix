@@ -31,12 +31,12 @@
     };
     fonts = {
       serif = {
-        name = "JetBrainsMono NerdFont";
-        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "CaskaydiaMono Nerd Font";
+        package = pkgs.nerd-fonts.caskaydia-mono;
       };
       monospace = config.stylix.fonts.serif;
       emoji.package = pkgs.noto-fonts-emoji;
-      sizes.terminal = 13;
+      sizes.terminal = 12;
     };
     targets = {
       vesktop.enable = false;

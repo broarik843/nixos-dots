@@ -21,7 +21,7 @@
       lm_sensors
       prismlauncher
       inputs.ayugram-desktop.packages.${pkgs.system}.ayugram-desktop
-      inputs.zen-browser.packages."${system}".specific
+      inputs.zen-browser.packages."${system}".beta
 
       hiddify-app
 
@@ -39,9 +39,9 @@
       obs-studio
       
       #tor-browser
-      #tonelib-gfx
+      tonelib-gfx
 
-      inputs.nix-software-center.packages.${system}.nix-software-center
+      #inputs.nix-software-center.packages.${system}.nix-software-center
       kdePackages.kdeconnect-kde
       neovim
       fragments
@@ -64,13 +64,13 @@
       scrcpy
       vscodium
       wl-clipboard
+
     ];
-    enableNixpkgsReleaseCheck = false;
     username = "yaroslav";
     homeDirectory = "/home/yaroslav";
   };
   
-    
+
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
